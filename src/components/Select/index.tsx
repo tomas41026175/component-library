@@ -14,16 +14,32 @@ type SelectProps = {
 
 function Select({ options, value, onChange }: SelectProps) {
     const [isOpen, setIsOpen] = useState(false)
+    const [isOptionSelected, setIsOptionSelected] = useState(value)
+
+    const clearOption = () => {
+        onChange?.(undefined)
+    }
+
+    const selectOption = (option: SelectOptions) => {
+        onChange?.(option)
+    }
 
     return <>
         <div onBlur={() => setIsOpen(false)} onClick={() => setIsOpen(prev => !prev)} tabIndex={0} className={styles.container}>
             <span className={styles.value}>{value?.label}</span>
-            <button className={styles["clear-btn"]}>&times;</button>
+            <button onClick={(e) => {
+                e.stopPropagation()
+                clearOption()
+            }} className={styles["clear-btn"]}>&times;</button>
             <div className={styles.divider}></div>
             <div className={styles.caret}></div>
-            <ul className={`${styles.options} ${styles.show}`}>
+            {/* ${styles.show} */}
+            <ul className={`${styles.options}`}>
                 {options?.map((option) => (
-                    <li key={option.value} className={styles.option}>
+                    <li key={option.value} className={`${styles.option} ${isOptionSelected(option) ? styles.selected}:""`} onClick={e => {
+                        e.stopPropagation()
+                        selectOption(option)
+                    }}>
                         {option.label}
                     </li>
                 )
