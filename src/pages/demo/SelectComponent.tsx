@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Select from "@/components/SingleSelect";
-import { SelectOption } from "@/components/SingleSelect/types";
+import Select from "@/components/Select";
+import { SelectOption } from "@/components/Select/types";
 
 const options = [
   { label: "First", value: 1 },
